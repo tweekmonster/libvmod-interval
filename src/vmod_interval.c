@@ -78,7 +78,7 @@ vmod_every(struct sess *sp, int hour, int minute, int second)
 double
 vmod_at(struct sess *sp, int hour, int minute, int second)
 {
-    time_t t1 = time(0);
+    time_t t1 = time(NULL);
     time_t t2 = future_time(&t1, hour, minute, second);
     return (double)(t2 - t1);
 }
