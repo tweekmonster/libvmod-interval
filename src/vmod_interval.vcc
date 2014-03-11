@@ -1,0 +1,6 @@
+Module interval
+Init init_function
+Function DURATION every(INT, INT, INT)
+Function DURATION at(INT, INT, INT)
+Function BOOL is_before(INT, INT, INT)
+Function BOOL is_after(INT, INT, INT)

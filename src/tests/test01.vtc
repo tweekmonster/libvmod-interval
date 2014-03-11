@@ -1,0 +1,41 @@
+varnishtest "Test interval vmod"
+
+server s1 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -vcl+backend {
+    import interval from "${vmod_topbuild}/src/.libs/libvmod_interval.so";
+
+    sub vcl_deliver {
+        set resp.http.every = interval.every(0, 1, 0);
+        set resp.http.at = interval.at(23, 59, 0);
+
+        if (interval.is_before(12, 59, 0))
+        {
+            set resp.http.before = 1;
+        }
+        else
+        {
+            set resp.http.before = 0;
+        }
+
+        if (interval.is_after(17, 0, 0))
+        {
+            set resp.http.after = 1;
+        }
+        else
+        {
+            set resp.http.after = 0;
+        }
+    }
+} -start
+
+client c1 {
+    txreq -url "/"
+    rxresp
+    expect resp.http.fail_on_purpose_to_show_output == 1
+}
+
+client c1 -run
