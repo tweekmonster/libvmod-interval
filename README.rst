@@ -62,7 +62,7 @@ Description
 Prototype
     ::
 
-        is_before(INT hours, INT minutes, INT seconds)
+        is_after(INT hours, INT minutes, INT seconds)
 Return value
     BOOL
 Description
